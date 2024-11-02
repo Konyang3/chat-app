@@ -1,0 +1,35 @@
+.Join {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.Join header {
+    font-size: 24px;
+    margin-bottom: 24px;
+}
+
+.Join form {
+    display: flex;
+    flex-direction: column;
+    width: 380px;
+    align-items: flex-start;
+    gap: 12px;
+    margin-left: 134px;
+}
+
+.Join form input {
+    width: 240px;
+}
+
+.Join form .id {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.Join form .join-btn {
+    margin-left: 92px;
+}

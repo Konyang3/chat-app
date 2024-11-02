@@ -10,13 +10,17 @@ function Home() {
   const goToLogin = () => {
     navigate('/login')
   }
+
+  const goToJoin = () => {
+    navigate('/join')
+  }
   
   return (
     <div className="Home">
       <header>
         <div className={'button-group'}>
           <Button onClick={goToLogin}>로그인</Button>
-          <Button>회원가입</Button>
+          <Button onClick={goToJoin}>회원가입</Button>
         </div>
       </header>
       <img src={logo} className="logo" alt="logo" />
