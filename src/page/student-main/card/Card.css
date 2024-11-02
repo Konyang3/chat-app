@@ -1,0 +1,27 @@
+.Card {
+    width: 340px;
+    height: 142px;
+    background-color: gray;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.Card h1 {
+    color: white;
+    margin: 0;
+    margin-bottom: 12px;
+}
+
+.Card p {
+    color: white;
+    margin: 0;
+}
+
+.Card button {
+    width: 88px;
+    height: 48px;
+    font-weight: bold;
+    font-size: 18px;
+    align-self: flex-end;
+}

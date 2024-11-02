@@ -1,0 +1,14 @@
+.StudentMain .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 20px;
+    width: 90%;
+}
+
+.StudentMain {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
