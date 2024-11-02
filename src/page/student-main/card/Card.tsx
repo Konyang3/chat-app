@@ -4,7 +4,7 @@ import "./Card.css"
 import Button from "../../../component/button/Button"
 
 type Props = {
-    onEnter: () => void
+    onEnter: (subjectName: string) => void
 } & CardType
 
 function Card(props: Props) {
@@ -13,7 +13,7 @@ function Card(props: Props) {
             <h1>{props.subjectName}</h1>
             <p>교수명: {props.professorName}</p>
             <p>분반: {props.nameOfClass}</p>
-            <Button onClick={props.onEnter}>입장</Button>
+            <Button onClick={() => props.onEnter(props.subjectName)}>입장</Button>
         </div>
     )
 }
