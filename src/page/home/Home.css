@@ -7,19 +7,15 @@
     pointer-events: none;
 }
 
-header {
+.Home header {
     height: 120px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    font-size: calc(10px + 2vmin);
-    color: white;
 }
 
-button {
-    width: 80px;
-    height: 40px;
-    border-radius: 12px;
-    background-color: white;
+.button-group {
+    display: flex;
+    gap: 24px;
     margin-right: 24px;
 }
