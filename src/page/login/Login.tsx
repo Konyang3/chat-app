@@ -12,7 +12,7 @@ function Login() {
         e.preventDefault()
 
         //TODO:: 로그인 성공 시
-        navigate('/student-main')
+        navigate('/main')
     }
 
     return (

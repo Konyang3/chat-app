@@ -1,10 +1,10 @@
 import React from 'react'
 import Card, { CardType } from './card/Card'
 
-import './StudentMain.css'
+import './Main.css'
 import { useNavigate } from 'react-router-dom'
 
-function StudentMain() {
+function Main() {
     const navigate = useNavigate()
 
     const classList: CardType[] = [
@@ -20,7 +20,7 @@ function StudentMain() {
     }
 
     return (
-        <div className='StudentMain'>
+        <div className='Main'>
             <div className='content'>
                 {classList.map((item) => {
                     return <Card key={item.subjectName} subjectName={item.subjectName} professorName={item.professorName} nameOfClass={item.nameOfClass} onEnter={enterClass} />
@@ -30,4 +30,4 @@ function StudentMain() {
     )
 }
 
-export default StudentMain
+export default Main

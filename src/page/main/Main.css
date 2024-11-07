@@ -1,4 +1,4 @@
-.StudentMain .content {
+.Main .content {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -6,7 +6,7 @@
     width: 90%;
 }
 
-.StudentMain {
+.Main {
     display: flex;
     height: 100%;
     justify-content: center;

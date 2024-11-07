@@ -9,18 +9,19 @@ function Join() {
 
     }
 
+    //TODO:: 학번으로 교수, 학생 구분 교수는 자리, 학생은 8자리
+
     return (
         <div className="Join">
             <header>JOIN</header>
             <form onSubmit={signUp}>
                 <div className='id'>
-                    <Input placeholder="ID 입력"></Input>
-                    <Button>ID 중복 확인</Button>
+                    <Input placeholder="학번 입력"></Input>
+                    <Button>학번 중복 확인</Button>
                 </div>
                 <Input placeholder="PW 입력"></Input>
                 <Input placeholder="PW 확인"></Input>
                 <Input placeholder="이름"></Input>
-                <Input placeholder="학번"></Input>
                 <Button className='join-btn'>회원가입</Button>
             </form>
         </div>
