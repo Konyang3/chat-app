@@ -12,3 +12,11 @@
     justify-content: center;
     align-items: center;
 }
+
+.CreateChatRoom {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 100px;
+    cursor: pointer;
+} 

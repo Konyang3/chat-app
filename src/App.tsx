@@ -6,6 +6,7 @@ import Login from './page/login/Login';
 import Join from './page/join/Join';
 import Main from './page/main/Main';
 import Chat from './page/chat/Chat';
+import CreateChat from './page/create-chat/CreateChat';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path='/join' element={<Join />} />
         <Route path='/main' element={<Main />} />
         <Route path='/chat/:subjectName' element={<Chat />} />
+        <Route path='/create-chat' element={<CreateChat />} />
       </Routes>
     </BrowserRouter>
   );
