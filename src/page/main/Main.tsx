@@ -4,7 +4,7 @@ import Card, { CardType } from './card/Card'
 import './Main.css'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../reducer/hook'
-import { selectSubjectList } from '../../reducer/appSlice'
+import { selectIsStudent, selectSubjectList } from '../../reducer/appSlice'
 
 function Main() {
     const navigate = useNavigate()
@@ -55,9 +55,10 @@ export default Main
 
 function CreateChatRoom() {
     const navigate = useNavigate()
+    const isStudent = useAppSelector(selectIsStudent)
 
     const goToCreateChatRoom = () => {
-        navigate("/create-chat")
+        isStudent ? navigate('/join-chat') : navigate("/create-chat")
     }
 
     return <div className='Card CreateChatRoom' onClick={goToCreateChatRoom}>+</div>
