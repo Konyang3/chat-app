@@ -9,17 +9,30 @@ function CreateChat() {
     const navigate = useNavigate()
     const [professorName, setProfessorName] = useState('')
     const [subjectName, setSubjectName] = useState('')
-    const [subjectCode, setSubjectCode] = useState('')
     const [className, setClassName] = useState('')
 
     const createChat = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        try {
-            navigate(`/chat/${subjectCode}`)
-        } catch {
-            alert('과목 생성에 실패하였습니다.')
+        const data = {
+            subjectName: subjectName,
+            professorName: professorName,
+            separatedClass: className,
         }
+
+        fetch(
+            'http://localhost:8080/create-subject', 
+            { method: "post", body: JSON.stringify(data), headers: {'content-type': "application/json"}, credentials: "include" }
+        ).then((res) => {
+            res.json().then((value) => {
+                if (value?.subject_code && value.subject_name) {
+                    navigate(`/chat/${value.subject_code}/${value.subject_name}`)
+                }
+            })
+        }).catch((e) => {
+            alert('과목 생성에 실패하였습니다.')
+        })
+
     }
 
     return (
@@ -28,7 +41,6 @@ function CreateChat() {
             <form onSubmit={createChat}>
                 <Input placeholder="교수 이름 입력" value={professorName} onChange={(e) => setProfessorName(e.target.value)}></Input>
                 <Input placeholder="과목 이름 입력" value={subjectName} onChange={(e) => setSubjectName(e.target.value)}></Input>
-                <Input placeholder="과목 코드 입력" value={subjectCode} onChange={(e) => setSubjectCode(e.target.value)}></Input>
                 <Input placeholder="분반 입력" value={className} onChange={(e) => setClassName(e.target.value)}></Input>
                 <Button>채팅방 생성</Button>
             </form>
