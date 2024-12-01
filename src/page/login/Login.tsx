@@ -4,17 +4,25 @@ import './Login.css'
 import Button from "../../component/button/Button"
 import Input from "../../component/input/Input"
 import { useNavigate } from "react-router-dom"
+import { useAppDispatch } from "../../reducer/hook"
+import { setSubjectList } from "../../reducer/appSlice"
 
 function Login() {
     const [id, setId] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
 
     const login = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        fetch('http://localhost:8080/login', { method: 'post', body: JSON.stringify({ id, password }) }).then((res) => {
+        fetch('http://localhost:8080/login', { method: 'post', body: JSON.stringify({ id, password }), headers: {'content-type': "application/json"}, credentials: "include" }).then((res) => {
             if(res.status === 200) {
+                console.log
+                res.json().then((value) => {
+                    console.log(value.subject_codes)
+                    dispatch(setSubjectList(value.subject_codes))
+                })
                 navigate('/main')
             } else {
                 alert('로그인에 실패하였습니다.')    
