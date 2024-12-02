@@ -1,12 +1,16 @@
 import { Button, Calendar, CalendarProps } from "antd"
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
+import { format } from 'date-fns'
 import React, { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import { useAppDispatch } from "../../reducer/hook";
+import { setCurChatDate, setCurChatIsClose } from "../../reducer/appSlice";
 
 export default function CalendarView() {
     const {subjectName, subjectCode} = useParams()
-    const [chatDateList, setChatDateList] = useState<Date[]>([])
+    const [chatDateList, setChatDateList] = useState<{date: Date; isClose: boolean}[]>([])
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         (async function() {
@@ -21,7 +25,7 @@ export default function CalendarView() {
                 credentials: "include"
             }).then((res) => {
                 res.json().then((value) => {
-                    const dateList = value.map((date: any) => new Date(date.date))
+                    const dateList = value.map((date: any) => ({date: new Date(date.date), isClose: Boolean(date.close)}))
 
                     setChatDateList(dateList)
                 }).catch((e) => {
@@ -33,21 +37,41 @@ export default function CalendarView() {
         })();
     }, [])
 
-    const enterChat = () => {
+    const enterChat = (date: Date, isClose: boolean) => () => {
+        dispatch(setCurChatDate(date))
+        dispatch(setCurChatIsClose(isClose))
         navigate(`/chat/${subjectCode}/${subjectName}`)
+    }
+
+    const createChat = () => {
+        const date = new Date()
+
+        fetch('http://localhost:8080/create-chat', 
+            {method: 'post', body: JSON.stringify({subjectCode, date}), headers: {'content-type': "application/json"}, credentials: "include"}
+        ).then((res) => {
+            if (res.status === 200) {
+                enterChat(date, false)
+            } else {
+                alert('채팅방 생성에 실패하였습니다.')
+            }
+        }).catch(() => {
+            alert('채팅방 생성에 실패하였습니다.')
+        })
     }
 
     const isChatExist = (value: Dayjs) => {
         return chatDateList.find((date) => {
-            return dayjs(date).diff(value, 'day') === 0
+            return format(date.date, 'yyyy-MM-dd') === format(value.toDate(), 'yyyy-MM-dd')
         })
     };
 
     const dateCellRender = (value: Dayjs) => {
+        const chatRoomData = isChatExist(value)
+
         return (
             <>
-                {isChatExist(value) ? <Button onClick={enterChat}>채팅방 입장하기</Button> : null}
-                {value.isToday() ? <Button onClick={enterChat}>채팅 시작하기</Button> : null}
+                {chatRoomData ? <Button onClick={enterChat(chatRoomData.date, chatRoomData.isClose)}>채팅방 입장하기</Button> : 
+                value.isToday() ? <Button onClick={createChat}>채팅 시작하기</Button> : null}
             </>
         );
     };    

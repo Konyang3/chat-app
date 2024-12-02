@@ -4,11 +4,15 @@ import { RootState } from './store'
 export interface AppState {
   subjectList: string[]
   isStudent: boolean
+  curChatIsClose: boolean | null
+  curChatDate: Date | null
 }
 
 const initialState: AppState = {
   subjectList: [],
   isStudent: true,
+  curChatIsClose: null,
+  curChatDate: null
 }
 
 export const counterSlice = createSlice({
@@ -20,16 +24,24 @@ export const counterSlice = createSlice({
     },
     setIsStudent: (state, action: PayloadAction<boolean>) => {
       state.isStudent = action.payload
+    },
+    setCurChatIsClose: (state, action: PayloadAction<boolean>) => {
+      state.curChatIsClose = action.payload
+    },
+    setCurChatDate: (state, action: PayloadAction<Date>) => {
+      state.curChatDate = action.payload
     }
   },
 })
 
-export const { setSubjectList, setIsStudent } = counterSlice.actions
+export const { setSubjectList, setIsStudent, setCurChatIsClose, setCurChatDate } = counterSlice.actions
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const selectSubjectList = (state: RootState) => state.app.subjectList
 export const selectIsStudent = (state: RootState) => state.app.isStudent
+export const selectCurChatDate = (state: RootState) => state.app.curChatDate
+export const selectCurChatIsClose = (state: RootState) => state.app.curChatIsClose
 
 export default counterSlice.reducer
