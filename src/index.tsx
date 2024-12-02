@@ -5,6 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './reducer/store';
+import dayjs, { Dayjs } from "dayjs";
+import isToday from "dayjs/plugin/isToday";
+
+dayjs.extend(isToday)
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

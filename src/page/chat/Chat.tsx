@@ -10,7 +10,7 @@ import UpArrowIcon from "../../asset/up-arrow-icon.svg"
 import Button from "../../component/button/Button"
 
 function Chat() {
-    const {subjectName} = useParams()
+    const { subjectName } = useParams()
 
     const chatList = [
         {profileImg: "asdfasdf", chat: "교수님 질문있습니다.", like: 2},

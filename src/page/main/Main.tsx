@@ -25,7 +25,7 @@ function Main() {
                     });
                 const data = await response.json()
                 setClassList(data.map((value: any) => {
-                    return {subjectName: value.subject_name, professorName: value.professor_name, nameOfClass: value.separated_class}
+                    return {subjectName: value.subject_name, professorName: value.professor_name, nameOfClass: value.separated_class, subjectCode: value.subject_code}
                 }))
             } catch {
                 alert('과목 정보들을 불러오는데 실패하였습니다.')
@@ -35,15 +35,15 @@ function Main() {
         getClassList()
     }, [subjectList])
 
-    const enterClass = (subjectName: string) => {
-        navigate('/chat/' + subjectName)
+    const enterClass = (subjectName: string, subjectCode: string) => {
+        navigate(`/chat/${subjectCode}/${subjectName}/calendar`)
     }
 
     return (
         <div className='Main'>
             <div className='content'>
                 {classList.map((item) => {
-                    return <Card key={item.subjectName} subjectName={item.subjectName} professorName={item.professorName} nameOfClass={item.nameOfClass} onEnter={enterClass} />
+                    return <Card key={item.subjectName} subjectName={item.subjectName} subjectCode={item.subjectCode} professorName={item.professorName} nameOfClass={item.nameOfClass} onEnter={enterClass} />
                 })}
                 <CreateChatRoom />
             </div>
