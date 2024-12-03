@@ -34,7 +34,10 @@ function Chat() {
                 credentials: "include"
             }).then((res) => {
                 res.json().then((values) => {
-                    const data = values.map((value: any) => ({...value, date: new Date(value.date)}))
+                    const data = values.map((value: any) => {
+                            const empathy = value.empathy.split(',')
+                            return {...value, date: new Date(value.date), empathy: empathy[0]?.length === 0 ? [] : empathy}
+                        })
 
                     setChatMessageList(data)
                 }).catch(() => {
@@ -132,7 +135,7 @@ function Chat() {
         socket.on('message', function(message) {
             console.log(JSON.stringify(message));
 
-            console.log('수신 메시지 : ' + message.sender + ', ' + message.recepient + ', ' + message.command + ', ' + message.data);
+            console.log('수신 메시지 : ' + message.sender + ', ' + message.recepient + ', ' + message.data);
             setChatMessageList(chatMessageList.concat([{sender: message.sender, message: message.data, id: message.id, date: new Date(message.date), empathy: []}]))
         });
 
@@ -140,10 +143,7 @@ function Chat() {
             const newChatMessageList = chatMessageList.map((chat) => {
                 console.log(chat.id, message, chat.empathy)
                 if (chat.id === message.messageId) {
-                    if (chat.empathy.includes(message.sender)) {
-                        chat.empathy = chat.empathy.filter((value) => value !== message.sender)
-                        console.log(chat.empathy)
-                    } else  chat.empathy = chat.empathy.concat(message.sender)
+                    chat.empathy = message.empathy
                 }
                 return chat
             })
@@ -163,7 +163,7 @@ function Chat() {
         if (sendMessage === '') return
         const roomId = subjectCode + "_" + format(date, 'yyyy-MM-dd')
 
-        var output = {sender: id, recepient: roomId, command:'groupchat', type:'text', data: sendMessage, date: new Date()};
+        var output = {sender: id, recepient: roomId, type:'text', data: sendMessage, date: new Date(), subjectCode};
         console.log('서버로 보낼 데이터 : ' + JSON.stringify(output));
 
         if (socket == undefined) {

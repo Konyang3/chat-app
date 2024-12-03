@@ -26,7 +26,8 @@ function CreateChat() {
         ).then((res) => {
             res.json().then((value) => {
                 if (value?.subject_code && value.subject_name) {
-                    navigate(`/chat/${value.subject_code}/${value.subject_name}`)
+                    alert(`과목생성을 완료하였습니다. 과목 코드는 ${value.subject_code} 입니다.`)
+                    navigate(`/chat/${value.subject_code}/${value.subject_name}/calendar`)
                 }
             })
         }).catch((e) => {
