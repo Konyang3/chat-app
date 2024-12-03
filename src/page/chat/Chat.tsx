@@ -35,8 +35,8 @@ function Chat() {
             }).then((res) => {
                 res.json().then((values) => {
                     const data = values.map((value: any) => {
-                            const empathy = value.empathy.split(',')
-                            return {...value, date: new Date(value.date), empathy: empathy[0]?.length === 0 ? [] : empathy}
+                            const empathy = value.empathy.split(',').filter((value: string) => value.length !== 0)
+                            return {...value, date: new Date(value.date), empathy: empathy}
                         })
 
                     setChatMessageList(data)
@@ -55,7 +55,6 @@ function Chat() {
     }, [])
 
     useEffect(() => {
-        if (isClose) return
         if (date === null) return
         if (id === null) return
 
@@ -163,7 +162,7 @@ function Chat() {
         if (sendMessage === '') return
         const roomId = subjectCode + "_" + format(date, 'yyyy-MM-dd')
 
-        var output = {sender: id, recepient: roomId, type:'text', data: sendMessage, date: new Date(), subjectCode};
+        var output = {sender: id, recepient: roomId, type:'text', data: sendMessage, date: new Date(), subjectCode, chatRoomDate: date};
         console.log('서버로 보낼 데이터 : ' + JSON.stringify(output));
 
         if (socket == undefined) {
@@ -221,24 +220,26 @@ function Chat() {
                         return <ChatBubble key={chat.id} messageId={chat.id} profileImg={''} chat={chat.message} like={chat.empathy.length} onClickLike={like} />
                     })}
                 </div>
-                <div className="input-area">
-                    <Input 
-                        placeholder="채팅 입력창" 
-                        value={sendMessage} 
-                        onKeyDown={(e) => {
-                            if (!e.shiftKey && e.key === 'Enter') send()
-                        }} 
-                        onChange={(e) => setSendMessage(e.target.value)} 
-                    />
-                    <button className="send-btn" onClick={send}><img src={UpArrowIcon}></img></button>
-                </div>
+                {isClose ? null : 
+                    <div className="input-area">
+                        <Input 
+                            placeholder="채팅 입력창" 
+                            value={sendMessage} 
+                            onKeyDown={(e) => {
+                                if (!e.shiftKey && e.key === 'Enter') send()
+                            }} 
+                            onChange={(e) => setSendMessage(e.target.value)} 
+                        />
+                        <button className="send-btn" onClick={send}><img src={UpArrowIcon}></img></button>
+                    </div>
+                }
             </div>
             <div className="best-chat-area">
                 <div className="date">
                     <time>{format(new Date(), 'yyyy-MM-dd')}</time>
                 </div>
                 <div className="chat-list">
-                    {chatMessageList.map((chat) => {
+                    {getBestChat(chatMessageList).map((chat) => {
                         return <ChatBubble key={chat.id} messageId={chat.id} chat={chat.message} like={chat.empathy.length} onClickLike={like} />
                     })}
                 </div>
@@ -259,4 +260,18 @@ type Chat = {
     id: string
     date: Date
     empathy: string[]
+}
+
+function getBestChat(chatMessageList: Chat[]) {
+    const sortedList = chatMessageList.filter((chat) => chat.empathy.length !== 0).sort((a, b) => {
+        if (a.empathy.length > b.empathy.length) {
+            return -1;
+          }
+          if (a.empathy.length < b.empathy.length) {
+            return 1;
+          }
+          return 0;
+    }).slice(0, 3)
+
+    return sortedList
 }
