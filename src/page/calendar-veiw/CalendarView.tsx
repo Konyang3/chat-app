@@ -50,7 +50,7 @@ export default function CalendarView() {
             {method: 'post', body: JSON.stringify({subjectCode, date}), headers: {'content-type': "application/json"}, credentials: "include"}
         ).then((res) => {
             if (res.status === 200) {
-                enterChat(date, false)
+                enterChat(date, false)()
             } else {
                 alert('채팅방 생성에 실패하였습니다.')
             }

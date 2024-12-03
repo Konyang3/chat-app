@@ -5,7 +5,7 @@ import Button from "../../component/button/Button"
 import Input from "../../component/input/Input"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch } from "../../reducer/hook"
-import { setIsStudent, setSubjectList } from "../../reducer/appSlice"
+import { setIsStudent, setSubjectList, setId as setStoreId } from "../../reducer/appSlice"
 
 function Login() {
     const [id, setId] = useState('')
@@ -20,13 +20,13 @@ function Login() {
             { method: 'post', body: JSON.stringify({ id, password }), headers: {'content-type': "application/json"}, credentials: "include" }
         ).then((res) => {
             if(res.status === 200) {
-                console.log
                 res.json().then((value) => {
                     const isStudent = value.id.length > 6
                     const subjectCodes = value.subject_codes ? value.subject_codes : []
 
                     dispatch(setSubjectList(subjectCodes))
                     dispatch(setIsStudent(isStudent))
+                    dispatch(setStoreId(value.id))
                 })
                 navigate('/main')
             } else {
