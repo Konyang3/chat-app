@@ -1,15 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from '../../asset/Logo.png';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../component/button/Button';
 import { useAppDispatch, useAppSelector } from '../../reducer/hook';
-import { selectId, setId } from '../../reducer/appSlice';
+import { selectId, setId, setSubjectList } from '../../reducer/appSlice';
 
 function Home() {
   const navigate = useNavigate()
   const id = useAppSelector(selectId)
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    fetch('http://localhost:8080/user', {
+        method: 'get',
+        headers: {'content-type': "application/json"},
+        credentials: "include"
+    }).then((res) => {
+        if (res.status === 200) {
+            res.json().then((value) => {
+                dispatch(setId(value.id))
+                dispatch(setSubjectList(value.subjectCodes))
+            })
+        }
+    })
+  }, [])
 
   const goToLogin = () => {
     navigate('/login')
@@ -26,7 +41,7 @@ function Home() {
     }).then((res) => {
       if (res.status) {
         dispatch(setId(null))
-        navigate('/')
+        dispatch(setSubjectList([]))
       }
     }).catch(() => {
       alert('로그아웃에 실패하였습니다.')

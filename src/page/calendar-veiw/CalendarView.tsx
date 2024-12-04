@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 import React, { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../reducer/hook";
-import { selectIsStudent, setCurChatIsClose } from "../../reducer/appSlice";
+import { selectIsStudent } from "../../reducer/appSlice";
 
 export default function CalendarView() {
     const {subjectName, subjectCode} = useParams()
@@ -38,8 +38,7 @@ export default function CalendarView() {
         })();
     }, [])
 
-    const enterChat = (date: Date, isClose: boolean) => () => {
-        dispatch(setCurChatIsClose(isClose))
+    const enterChat = (date: Date) => () => {
         navigate(`/chat/${subjectCode}/${subjectName}/${format(date, 'yyyy-MM-dd')}`)
     }
 
@@ -50,7 +49,7 @@ export default function CalendarView() {
             {method: 'post', body: JSON.stringify({subjectCode, date}), headers: {'content-type': "application/json"}, credentials: "include"}
         ).then((res) => {
             if (res.status === 200) {
-                enterChat(date, false)()
+                enterChat(date)()
             } else {
                 alert('채팅방 생성에 실패하였습니다.')
             }
@@ -70,7 +69,7 @@ export default function CalendarView() {
 
         return (
             <>
-                {chatRoomData ? <Button onClick={enterChat(chatRoomData.date, chatRoomData.isClose)}>채팅방 입장하기</Button> : 
+                {chatRoomData ? <Button onClick={enterChat(chatRoomData.date)}>채팅방 입장하기</Button> : 
                 value.isToday() && !isStudent ? <Button onClick={createChat}>채팅 시작하기</Button> : null}
             </>
         );

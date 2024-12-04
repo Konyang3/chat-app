@@ -10,14 +10,14 @@ import { connect, Socket } from "socket.io-client"
 import UpArrowIcon from "../../asset/up-arrow-icon.svg"
 import Button from "../../component/button/Button"
 import { useAppDispatch, useAppSelector } from "../../reducer/hook"
-import { selectCurChatIsClose, selectId, selectIsStudent, setCurChatIsClose } from "../../reducer/appSlice"
+import { selectId, selectIsStudent } from "../../reducer/appSlice"
 
 function Chat() {
     const { subjectName, subjectCode, date } = useParams()
     const [sendMessage, setSendMessage] = useState('')
     const [chatMessageList, setChatMessageList] = useState<Chat[]>([])
     const [socket, setSocket] = useState<Socket>()
-    const isClose = useAppSelector(selectCurChatIsClose)
+    const [isClose, setIsClose] = useState(false)
     const isStudent = useAppSelector(selectIsStudent)
     const id = useAppSelector(selectId)
     const dispatch = useAppDispatch()
@@ -25,7 +25,7 @@ function Chat() {
 
     useEffect(() => {
         (async function() {
-            if (date === null) return
+            if (date === undefined) return
 
             fetch('http://localhost:8080/chat-message-list', {
                 method: 'post',
@@ -46,11 +46,19 @@ function Chat() {
             }).catch((e) => {
                 alert('채팅 내역을 불러오지 못했습니다.')
             })
-        })();
 
-        return () => {
-            dispatch(setCurChatIsClose(null))
-        }
+            fetch('http://localhost:8080/chat-date-list', {
+                method: 'post',
+                body: JSON.stringify({startDate: date, endDate: date, subjectCode}),
+                headers: {'content-type': "application/json"},
+                credentials: "include"
+            }).then((res) => {
+                res.json().then((value) => {
+                    console.log(Boolean(value[0]?.close))
+                    setIsClose(Boolean(value[0]?.close))
+                })
+            }).catch(() => {})
+        })();
     }, [])
 
     useEffect(() => {
