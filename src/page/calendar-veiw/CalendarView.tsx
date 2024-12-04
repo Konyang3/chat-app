@@ -3,12 +3,13 @@ import { Dayjs } from "dayjs";
 import { format } from 'date-fns'
 import React, { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { useAppDispatch } from "../../reducer/hook";
-import { setCurChatDate, setCurChatIsClose } from "../../reducer/appSlice";
+import { useAppDispatch, useAppSelector } from "../../reducer/hook";
+import { selectIsStudent, setCurChatDate, setCurChatIsClose } from "../../reducer/appSlice";
 
 export default function CalendarView() {
     const {subjectName, subjectCode} = useParams()
     const [chatDateList, setChatDateList] = useState<{date: Date; isClose: boolean}[]>([])
+    const isStudent = useAppSelector(selectIsStudent)
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
 
@@ -71,7 +72,7 @@ export default function CalendarView() {
         return (
             <>
                 {chatRoomData ? <Button onClick={enterChat(chatRoomData.date, chatRoomData.isClose)}>채팅방 입장하기</Button> : 
-                value.isToday() ? <Button onClick={createChat}>채팅 시작하기</Button> : null}
+                value.isToday() && !isStudent ? <Button onClick={createChat}>채팅 시작하기</Button> : null}
             </>
         );
     };    

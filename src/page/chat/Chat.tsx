@@ -10,7 +10,7 @@ import { connect, Socket } from "socket.io-client"
 import UpArrowIcon from "../../asset/up-arrow-icon.svg"
 import Button from "../../component/button/Button"
 import { useAppDispatch, useAppSelector } from "../../reducer/hook"
-import { selectCurChatDate, selectCurChatIsClose, selectId, setCurChatDate, setCurChatIsClose } from "../../reducer/appSlice"
+import { selectCurChatDate, selectCurChatIsClose, selectId, selectIsStudent, setCurChatDate, setCurChatIsClose } from "../../reducer/appSlice"
 
 function Chat() {
     const { subjectName, subjectCode } = useParams()
@@ -19,6 +19,7 @@ function Chat() {
     const [socket, setSocket] = useState<Socket>()
     const date = useAppSelector(selectCurChatDate)
     const isClose = useAppSelector(selectCurChatIsClose)
+    const isStudent = useAppSelector(selectIsStudent)
     const id = useAppSelector(selectId)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -245,7 +246,7 @@ function Chat() {
                 </div>
                 <div className="footer">
                     <Button onClick={goToCalendar}>캘린더 보기</Button>
-                    {isClose ? null : <Button onClick={closeChat}>채팅 종료하기</Button>}
+                    {isClose || isStudent ? null : <Button onClick={closeChat}>채팅 종료하기</Button>}
                 </div>
             </div>
         </div>
