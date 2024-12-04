@@ -33,7 +33,7 @@ export const counterSlice = createSlice({
     setCurChatDate: (state, action: PayloadAction<Date | null>) => {
       state.curChatDate = action.payload
     },
-    setId: (state, action: PayloadAction<string>) => {
+    setId: (state, action: PayloadAction<string | null>) => {
       state.id = action.payload
     }
   },
