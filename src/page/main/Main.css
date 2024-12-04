@@ -6,11 +6,20 @@
     width: 90%;
 }
 
-.Main {
+.Main .container {
     display: flex;
+    flex-direction: column;
     height: 100%;
     justify-content: center;
     align-items: center;
+}
+
+.Main header {
+    height: 120px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 36px;
 }
 
 .CreateChatRoom {

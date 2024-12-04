@@ -5,6 +5,7 @@ import './Main.css'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../reducer/hook'
 import { selectIsStudent, selectSubjectList } from '../../reducer/appSlice'
+import { Button } from 'antd'
 
 function Main() {
     const navigate = useNavigate()
@@ -41,11 +42,16 @@ function Main() {
 
     return (
         <div className='Main'>
-            <div className='content'>
-                {classList.map((item) => {
-                    return <Card key={item.subjectName} subjectName={item.subjectName} subjectCode={item.subjectCode} professorName={item.professorName} nameOfClass={item.nameOfClass} onEnter={enterClass} />
-                })}
-                <CreateChatRoom />
+            <header>
+                <Button>로그아웃</Button>
+            </header>
+            <div className="container">
+                <div className='content'>
+                    {classList.map((item) => {
+                        return <Card key={item.subjectName} subjectName={item.subjectName} subjectCode={item.subjectCode} professorName={item.professorName} nameOfClass={item.nameOfClass} onEnter={enterClass} />
+                    })}
+                    <CreateChatRoom />
+                </div>
             </div>
         </div>
     )
