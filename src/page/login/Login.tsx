@@ -31,7 +31,7 @@ function Login() {
             return
         }
 
-        if (!!Number(id)) {
+        if (!isNumeric(id)) {
             alert('학번은 숫자만 입력해주세요.')
             return
         }
@@ -78,3 +78,7 @@ function Login() {
 }
 
 export default Login
+
+function isNumeric(str: string) {
+    return /^\d+$/.test(str);
+  }
