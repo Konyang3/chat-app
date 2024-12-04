@@ -15,8 +15,48 @@ function Join() {
     const signUp = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        if (id.length === 0) {
+            alert('학번을 입력해 주세요.')
+            return
+        }
+
+        if (id.length > 8) {
+            alert('학번은 8글자 이하입니다.')
+            return
+        }
+
+        if (id.length < 6) {
+            alert('학번은 최소 6글자입니다.')
+            return
+        }
+
+        if (!!Number(id)) {
+            alert('학번은 숫자만 입력해주세요.')
+            return
+        }
+
+        if (password.length === 0) {
+            alert('비밀번호를 입력해주세요.')
+            return
+        }
+
+        if (password.length > 32) {
+            alert('최대 비밀번호 길이는 32자 이하 입니다.')
+            return
+        }
+
         if (password !== passwordConfirm) {
             alert('비밀번호가 일치하지 않습니다.')
+            return
+        }
+
+        if (name.length === 0) {
+            alert('이름을 입력해주세요.')
+            return
+        }
+
+        if (name.length > 12) {
+            alert('최대 이름 길이는 12글자 입니다.')
             return
         }
 

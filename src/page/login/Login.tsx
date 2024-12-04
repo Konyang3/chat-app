@@ -16,6 +16,36 @@ function Login() {
     const login = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
+        if (id.length === 0) {
+            alert('학번을 입력해 주세요.')
+            return
+        }
+
+        if (id.length > 8) {
+            alert('학번은 8글자 이하입니다.')
+            return
+        }
+
+        if (id.length < 6) {
+            alert('학번은 최소 6글자입니다.')
+            return
+        }
+
+        if (!!Number(id)) {
+            alert('학번은 숫자만 입력해주세요.')
+            return
+        }
+
+        if (password.length === 0) {
+            alert('비밀번호를 입력해주세요.')
+            return
+        }
+
+        if (password.length > 32) {
+            alert('최대 비밀번호 길이는 32자 이하 입니다.')
+            return
+        }
+
         fetch('http://localhost:8080/login', 
             { method: 'post', body: JSON.stringify({ id, password }), headers: {'content-type': "application/json"}, credentials: "include" }
         ).then((res) => {
@@ -39,7 +69,7 @@ function Login() {
         <div className="Login">
             <header>LOGIN</header>
             <form onSubmit={login}>
-                <Input placeholder="학번 입력" value={id} onChange={(e) => setId(e.target.value)}></Input>
+                <Input placeholder="학번 입력" type="number" value={id} onChange={(e) => setId(e.target.value)}></Input>
                 <Input placeholder="PW 입력" type="password" value={password} onChange={(e) => setPassword(e.target.value)}></Input>
                 <Button>로그인</Button>
             </form>
