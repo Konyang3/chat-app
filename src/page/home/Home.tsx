@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../component/button/Button';
 import { useAppDispatch, useAppSelector } from '../../reducer/hook';
 import { selectId, setId } from '../../reducer/appSlice';
-import { useDispatch } from 'react-redux';
 
 function Home() {
   const navigate = useNavigate()

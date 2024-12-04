@@ -10,14 +10,13 @@ import { connect, Socket } from "socket.io-client"
 import UpArrowIcon from "../../asset/up-arrow-icon.svg"
 import Button from "../../component/button/Button"
 import { useAppDispatch, useAppSelector } from "../../reducer/hook"
-import { selectCurChatDate, selectCurChatIsClose, selectId, selectIsStudent, setCurChatDate, setCurChatIsClose } from "../../reducer/appSlice"
+import { selectCurChatIsClose, selectId, selectIsStudent, setCurChatIsClose } from "../../reducer/appSlice"
 
 function Chat() {
-    const { subjectName, subjectCode } = useParams()
+    const { subjectName, subjectCode, date } = useParams()
     const [sendMessage, setSendMessage] = useState('')
     const [chatMessageList, setChatMessageList] = useState<Chat[]>([])
     const [socket, setSocket] = useState<Socket>()
-    const date = useAppSelector(selectCurChatDate)
     const isClose = useAppSelector(selectCurChatIsClose)
     const isStudent = useAppSelector(selectIsStudent)
     const id = useAppSelector(selectId)
@@ -50,13 +49,12 @@ function Chat() {
         })();
 
         return () => {
-            dispatch(setCurChatDate(null))
             dispatch(setCurChatIsClose(null))
         }
     }, [])
 
     useEffect(() => {
-        if (date === null) return
+        if (date === undefined) return
         if (id === null) return
 
         const socket = connect('http://localhost:8080', {'forceNew':true})
@@ -93,7 +91,7 @@ function Chat() {
 
         socket.emit('login', loginData);
 
-        const roomId = subjectCode + "_" + format(date, 'yyyy-MM-dd')
+        const roomId = subjectCode + "_" + date
 
         const output = {command:'create', roomId:roomId, roomName:subjectName, roomOwner:id};
         console.log('서버로 보낼 데이터 : ' + JSON.stringify(output));
@@ -159,9 +157,9 @@ function Chat() {
     }, [socket, chatMessageList])
 
     const send = () => {
-        if (date === null) return
+        if (date === undefined) return
         if (sendMessage === '') return
-        const roomId = subjectCode + "_" + format(date, 'yyyy-MM-dd')
+        const roomId = subjectCode + "_" + date
 
         var output = {sender: id, recepient: roomId, type:'text', data: sendMessage, date: new Date(), subjectCode, chatRoomDate: date};
         console.log('서버로 보낼 데이터 : ' + JSON.stringify(output));
@@ -196,8 +194,8 @@ function Chat() {
     }
 
     const like = (messageId: string) => {
-        if (date === null) return
-        const roomId = subjectCode + "_" + format(date, 'yyyy-MM-dd')
+        if (date === undefined) return
+        const roomId = subjectCode + "_" + date
 
         var output = {messageId: messageId, sender: id, recepient: roomId};
         console.log('서버로 보낼 데이터 : ' + JSON.stringify(output));
@@ -215,7 +213,7 @@ function Chat() {
             <div className="chat-area">
                 <h1>{subjectName}</h1>
                 <hr></hr>
-                <div className="date"><time>{format(new Date(), 'yyyy-MM-dd')}</time></div>
+                <div className="date"><time>{date}</time></div>
                 <div className="chat-list">
                     {chatMessageList.map((chat) => {
                         return <ChatBubble key={chat.id} messageId={chat.id} profileImg={''} chat={chat.message} like={chat.empathy.length} onClickLike={like} sender={chat.sender} />

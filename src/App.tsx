@@ -18,7 +18,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/join' element={<Join />} />
         <Route path='/main' element={<Main />} />
-        <Route path='/chat/:subjectCode/:subjectName' element={<Chat />} />
+        <Route path='/chat/:subjectCode/:subjectName/:date' element={<Chat />} />
         <Route path='/chat/:subjectCode/:subjectName/calendar' element={<CalendarView />}/>
         <Route path='/create-chat' element={<CreateChat />} />
         <Route path='/join-chat' element={<JoinChat />} />

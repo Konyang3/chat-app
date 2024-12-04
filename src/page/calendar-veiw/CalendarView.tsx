@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 import React, { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../reducer/hook";
-import { selectIsStudent, setCurChatDate, setCurChatIsClose } from "../../reducer/appSlice";
+import { selectIsStudent, setCurChatIsClose } from "../../reducer/appSlice";
 
 export default function CalendarView() {
     const {subjectName, subjectCode} = useParams()
@@ -39,9 +39,8 @@ export default function CalendarView() {
     }, [])
 
     const enterChat = (date: Date, isClose: boolean) => () => {
-        dispatch(setCurChatDate(date))
         dispatch(setCurChatIsClose(isClose))
-        navigate(`/chat/${subjectCode}/${subjectName}`)
+        navigate(`/chat/${subjectCode}/${subjectName}/${format(date, 'yyyy-MM-dd')}`)
     }
 
     const createChat = () => {
