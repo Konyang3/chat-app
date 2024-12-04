@@ -3,14 +3,15 @@ import Card, { CardType } from './card/Card'
 
 import './Main.css'
 import { useNavigate } from 'react-router-dom'
-import { useAppSelector } from '../../reducer/hook'
-import { selectIsStudent, selectSubjectList } from '../../reducer/appSlice'
+import { useAppDispatch, useAppSelector } from '../../reducer/hook'
+import { selectIsStudent, selectSubjectList, setId, setSubjectList } from '../../reducer/appSlice'
 import { Button } from 'antd'
 
 function Main() {
     const navigate = useNavigate()
     const [classList, setClassList] = useState<CardType[]>([])
     const subjectList = useAppSelector(selectSubjectList)
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         const getClassList = async () => {
@@ -40,10 +41,25 @@ function Main() {
         navigate(`/chat/${subjectCode}/${subjectName}/calendar`)
     }
 
+    const logout = () => {
+        fetch('http://localhost:8080/logout', {
+          method: 'get',
+          credentials: "include"
+        }).then((res) => {
+          if (res.status) {
+            dispatch(setId(null))
+            dispatch(setSubjectList([]))
+            navigate('/')
+          }
+        }).catch(() => {
+          alert('로그아웃에 실패하였습니다.')
+        })
+      }
+
     return (
         <div className='Main'>
             <header>
-                <Button>로그아웃</Button>
+                <Button onClick={logout}>로그아웃</Button>
             </header>
             <div className="container">
                 <div className='content'>

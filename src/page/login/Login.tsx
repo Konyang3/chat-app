@@ -6,6 +6,7 @@ import Input from "../../component/input/Input"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch } from "../../reducer/hook"
 import { setSubjectList, setId as setStoreId } from "../../reducer/appSlice"
+import { aesEncrypt, isNumeric } from "../../util/util"
 
 function Login() {
     const [id, setId] = useState('')
@@ -46,8 +47,13 @@ function Login() {
             return
         }
 
+        if (password.length < 8) {
+            alert('최소 비밀번호 길이는 8자 입니다.')
+            return
+        }
+
         fetch('http://localhost:8080/login', 
-            { method: 'post', body: JSON.stringify({ id, password }), headers: {'content-type': "application/json"}, credentials: "include" }
+            { method: 'post', body: JSON.stringify({ id, password: aesEncrypt(password) }), headers: {'content-type': "application/json"}, credentials: "include" }
         ).then((res) => {
             if(res.status === 200) {
                 res.json().then((value) => {
@@ -78,7 +84,3 @@ function Login() {
 }
 
 export default Login
-
-function isNumeric(str: string) {
-    return /^\d+$/.test(str);
-  }

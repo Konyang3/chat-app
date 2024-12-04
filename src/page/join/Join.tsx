@@ -4,6 +4,7 @@ import Input from '../../component/input/Input'
 
 import './Join.css'
 import { useNavigate } from 'react-router-dom'
+import { aesEncrypt, isNumeric } from '../../util/util'
 
 function Join() {
     const [id, setId] = useState('')
@@ -30,7 +31,7 @@ function Join() {
             return
         }
 
-        if (!!Number(id)) {
+        if (!isNumeric(id)) {
             alert('학번은 숫자만 입력해주세요.')
             return
         }
@@ -50,6 +51,11 @@ function Join() {
             return
         }
 
+        if (password.length < 8) {
+            alert('최소 비밀번호 길이는 8자 입니다.')
+            return
+        }
+
         if (name.length === 0) {
             alert('이름을 입력해주세요.')
             return
@@ -61,7 +67,7 @@ function Join() {
         }
 
         try {
-            const res = await fetch('http://localhost:8080/register', {method: 'post', body: JSON.stringify({id, password, name}), headers: {'content-type': "application/json"}})
+            const res = await fetch('http://localhost:8080/register', {method: 'post', body: JSON.stringify({id, password: aesEncrypt(password), name}), headers: {'content-type': "application/json"}})
             if (res.status === 200) {
                 alert("회원가입에 성공하였습니다.")
                 navigate('/login')
@@ -73,8 +79,6 @@ function Join() {
             alert("회원가입에 실패하였습니다.")
         }
     }
-
-    //TODO:: 학번으로 교수, 학생 구분 교수는 자리, 학생은 8자리
 
     return (
         <div className="Join">
