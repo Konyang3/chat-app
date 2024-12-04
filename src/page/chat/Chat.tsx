@@ -218,7 +218,7 @@ function Chat() {
                 <div className="date"><time>{format(new Date(), 'yyyy-MM-dd')}</time></div>
                 <div className="chat-list">
                     {chatMessageList.map((chat) => {
-                        return <ChatBubble key={chat.id} messageId={chat.id} profileImg={''} chat={chat.message} like={chat.empathy.length} onClickLike={like} />
+                        return <ChatBubble key={chat.id} messageId={chat.id} profileImg={''} chat={chat.message} like={chat.empathy.length} onClickLike={like} sender={chat.sender} />
                     })}
                 </div>
                 {isClose ? null : 
@@ -241,7 +241,7 @@ function Chat() {
                 </div>
                 <div className="chat-list">
                     {getBestChat(chatMessageList).map((chat) => {
-                        return <ChatBubble key={chat.id} messageId={chat.id} chat={chat.message} like={chat.empathy.length} onClickLike={like} />
+                        return <ChatBubble key={chat.id} messageId={chat.id} chat={chat.message} like={chat.empathy.length} onClickLike={like} sender={chat.sender} />
                     })}
                 </div>
                 <div className="footer">
@@ -256,7 +256,7 @@ function Chat() {
 export default Chat
 
 type Chat = {
-    sender: string
+    sender?: string
     message: string
     id: string
     date: Date
