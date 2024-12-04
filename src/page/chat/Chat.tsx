@@ -9,8 +9,9 @@ import { connect, Socket } from "socket.io-client"
 
 import UpArrowIcon from "../../asset/up-arrow-icon.svg"
 import Button from "../../component/button/Button"
-import { useAppDispatch, useAppSelector } from "../../reducer/hook"
+import { useAppSelector } from "../../reducer/hook"
 import { selectId, selectIsStudent } from "../../reducer/appSlice"
+import { badWords } from "./badWord"
 
 function Chat() {
     const { subjectName, subjectCode, date } = useParams()
@@ -20,7 +21,6 @@ function Chat() {
     const [isClose, setIsClose] = useState(false)
     const isStudent = useAppSelector(selectIsStudent)
     const id = useAppSelector(selectId)
-    const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -167,6 +167,10 @@ function Chat() {
     const send = () => {
         if (date === undefined) return
         if (sendMessage === '') return
+        if (filterText(sendMessage)) {
+            alert('비속어 사용이 금지되어있습니다.')
+            return
+        }
         const roomId = subjectCode + "_" + date
 
         var output = {sender: id, recepient: roomId, type:'text', data: sendMessage, date: new Date(), subjectCode, chatRoomDate: date};
@@ -281,4 +285,16 @@ function getBestChat(chatMessageList: Chat[]) {
     }).slice(0, 3)
 
     return sortedList
+}
+
+function filterText(inputText: string) {
+    // 비속어 유효성 검사
+    for (const word of badWords) {
+      const regex = new RegExp(word, "gi");
+      if (regex.test(inputText)) {
+            return true;
+        }
+    }
+
+    return false;
 }
