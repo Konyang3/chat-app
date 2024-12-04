@@ -14,6 +14,36 @@ function CreateChat() {
     const createChat = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
+        if (className.length === 0) {
+            alert('분반을 입력해주세요.')
+            return
+        }
+
+        if (subjectName.length === 0) {
+            alert('과목 이름을 입력해주세요.')
+            return
+        }
+
+        if (professorName.length === 0) {
+            alert('교수 이름을 입력해주세요.')
+            return
+        }
+
+        if (className.length > 45) {
+            alert('분반의 최대 길이는 45입니다.')
+            return
+        }
+
+        if (subjectName.length > 45) {
+            alert('과목 이름의 최대 길이는 45입니다.')
+            return
+        }
+
+        if (professorName.length > 45) {
+            alert('교수 이름의 최대 길이는 45입니다.')
+            return
+        }
+
         const data = {
             subjectName: subjectName,
             professorName: professorName,

@@ -15,6 +15,11 @@ function JoinChat() {
 
     const joinChat = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
+        if (subjectCode.length !== 8) {
+            alert('과목 코드는 8자입니다.')
+            return
+        }
         
         fetch('http://localhost:8080/join-subject',
             {method: 'post', body: JSON.stringify({subjectCode}), headers: {'content-type': "application/json"}, credentials: "include"}

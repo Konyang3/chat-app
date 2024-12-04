@@ -69,7 +69,7 @@ function Login() {
         <div className="Login">
             <header>LOGIN</header>
             <form onSubmit={login}>
-                <Input placeholder="학번 입력" type="number" value={id} onChange={(e) => setId(e.target.value)}></Input>
+                <Input placeholder="학번 입력" value={id} onChange={(e) => setId(e.target.value)}></Input>
                 <Input placeholder="PW 입력" type="password" value={password} onChange={(e) => setPassword(e.target.value)}></Input>
                 <Button>로그인</Button>
             </form>
