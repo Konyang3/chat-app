@@ -70,11 +70,6 @@ function Chat() {
         socket.on('connect', function() {
             console.log('웹소켓 서버에 연결되었습니다.');
 
-            socket.on('response', function(response) {
-                console.log(JSON.stringify(response));
-                console.log('응답 메시지를 받았습니다. : ' + response.command + ', ' + response.code + ', ' + response.message);
-            });
-
             // 그룹 채팅에서 방과 관련된 이벤트 처리
             socket.on('room', function(data) {
                 console.log(JSON.stringify(data));
@@ -131,7 +126,7 @@ function Chat() {
 
             socket.emit('room', output);
         }
-    }, [])
+    }, [id])
 
     useEffect(() => {
         if (socket === undefined) return
