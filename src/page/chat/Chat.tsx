@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 
 import './Chat.css'
 import { useNavigate, useParams } from "react-router-dom"
@@ -6,7 +6,6 @@ import {format} from 'date-fns'
 import ChatBubble from "./chat-bubble/ChatBubble"
 import { connect, Socket } from "socket.io-client"
 
-import UpArrowIcon from "../../asset/up-arrow-icon.svg"
 import { useAppSelector } from "../../reducer/hook"
 import { selectId, selectIsStudent } from "../../reducer/appSlice"
 import { badWords } from "./badWord"
@@ -23,6 +22,7 @@ function Chat() {
     const isStudent = useAppSelector(selectIsStudent)
     const id = useAppSelector(selectId)
     const navigate = useNavigate()
+    const messageEndRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         (async function() {
@@ -161,6 +161,10 @@ function Chat() {
         }
     }, [socket, chatMessageList])
 
+    useEffect(() => {
+        messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, [chatMessageList]);
+
     const send = () => {
         if (date === undefined) return
         if (sendMessage === '') return
@@ -227,6 +231,7 @@ function Chat() {
                     {chatMessageList.map((chat) => {
                         return <ChatBubble key={chat.id} messageId={chat.id} profileImg={''} chat={chat.message} like={chat.empathy.length} onClickLike={like} sender={chat.sender} />
                     })}
+                    <div ref={messageEndRef}></div>
                 </div>
                 {isClose ? null : 
                     <form className="input-area" onSubmit={(e) => {
