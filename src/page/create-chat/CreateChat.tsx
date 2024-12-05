@@ -4,12 +4,16 @@ import { useNavigate } from 'react-router-dom'
 import "./CreateChat.css"
 import { buildUrl } from '../../util/util'
 import { Button, Input } from 'antd'
+import { useAppDispatch, useAppSelector } from '../../reducer/hook'
+import { selectSubjectList, setSubjectList } from '../../reducer/appSlice'
 
 function CreateChat() {
     const navigate = useNavigate()
     const [professorName, setProfessorName] = useState('')
     const [subjectName, setSubjectName] = useState('')
     const [className, setClassName] = useState('')
+    const dispatch = useAppDispatch()
+    const subjectList = useAppSelector(selectSubjectList)
 
     const createChat = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -57,6 +61,7 @@ function CreateChat() {
             res.json().then((value) => {
                 if (value?.subject_code && value.subject_name) {
                     alert(`과목생성을 완료하였습니다. 과목 코드는 ${value.subject_code} 입니다.`)
+                    dispatch(setSubjectList(subjectList.concat(value.subject_code)))
                     navigate(`/chat/${value.subject_code}/${value.subject_name}/calendar`)
                 }
             })
