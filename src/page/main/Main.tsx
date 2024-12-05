@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../reducer/hook'
 import { selectIsStudent, selectSubjectList, setId, setSubjectList } from '../../reducer/appSlice'
 import { Button } from 'antd'
+import { buildUrl } from '../../util/util'
 
 function Main() {
     const navigate = useNavigate()
@@ -18,7 +19,7 @@ function Main() {
             if (subjectList.length === 0) return
             try {
                 const response = await fetch(
-                    'http://localhost:8080/subject-list', 
+                    buildUrl('/subject-list'),
                     {
                         method: 'post',
                         body: JSON.stringify({subjectCodes: subjectList}), 
@@ -42,7 +43,7 @@ function Main() {
     }
 
     const logout = () => {
-        fetch('http://localhost:8080/logout', {
+        fetch(buildUrl('/logout'), {
           method: 'get',
           credentials: "include"
         }).then((res) => {

@@ -22,3 +22,7 @@ export const aesDecrypt = (data: string | null) => {
 export function isNumeric(str: string) {
   return /^\d+$/.test(str);
 }
+
+export function buildUrl(url: string) {
+  return `${process.env.REACT_APP_HOST}${url}`
+}

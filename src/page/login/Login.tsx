@@ -6,7 +6,7 @@ import Input from "../../component/input/Input"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch } from "../../reducer/hook"
 import { setSubjectList, setId as setStoreId } from "../../reducer/appSlice"
-import { aesEncrypt, isNumeric } from "../../util/util"
+import { aesEncrypt, buildUrl, isNumeric } from "../../util/util"
 
 function Login() {
     const [id, setId] = useState('')
@@ -52,7 +52,7 @@ function Login() {
             return
         }
 
-        fetch('http://localhost:8080/login', 
+        fetch(buildUrl('/login'), 
             { method: 'post', body: JSON.stringify({ id, password: aesEncrypt(password) }), headers: {'content-type': "application/json"}, credentials: "include" }
         ).then((res) => {
             if(res.status === 200) {

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../component/button/Button';
 import { useAppDispatch, useAppSelector } from '../../reducer/hook';
 import { selectId, setId, setSubjectList } from '../../reducer/appSlice';
+import { buildUrl } from '../../util/util';
 
 function Home() {
   const navigate = useNavigate()
@@ -12,7 +13,7 @@ function Home() {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    fetch('http://localhost:8080/user', {
+    fetch(buildUrl('/user'), {
         method: 'get',
         headers: {'content-type': "application/json"},
         credentials: "include"
@@ -35,7 +36,7 @@ function Home() {
   }
 
   const logout = () => {
-    fetch('http://localhost:8080/logout', {
+    fetch(buildUrl('/logout'), {
       method: 'get',
       credentials: "include"
     }).then((res) => {

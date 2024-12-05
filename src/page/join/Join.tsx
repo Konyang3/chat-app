@@ -4,7 +4,7 @@ import Input from '../../component/input/Input'
 
 import './Join.css'
 import { useNavigate } from 'react-router-dom'
-import { aesEncrypt, isNumeric } from '../../util/util'
+import { aesEncrypt, buildUrl, isNumeric } from '../../util/util'
 
 function Join() {
     const [id, setId] = useState('')
@@ -67,7 +67,7 @@ function Join() {
         }
 
         try {
-            const res = await fetch('http://localhost:8080/register', {method: 'post', body: JSON.stringify({id, password: aesEncrypt(password), name}), headers: {'content-type': "application/json"}})
+            const res = await fetch(buildUrl('/register'), {method: 'post', body: JSON.stringify({id, password: aesEncrypt(password), name}), headers: {'content-type': "application/json"}})
             if (res.status === 200) {
                 alert("회원가입에 성공하였습니다.")
                 navigate('/login')

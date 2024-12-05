@@ -6,6 +6,7 @@ import Button from '../../component/button/Button'
 import "./JoinChat.css"
 import { useAppDispatch, useAppSelector } from '../../reducer/hook'
 import { selectSubjectList, setSubjectList } from '../../reducer/appSlice'
+import { buildUrl } from '../../util/util'
 
 function JoinChat() {
     const navigate = useNavigate()
@@ -21,7 +22,7 @@ function JoinChat() {
             return
         }
         
-        fetch('http://localhost:8080/join-subject',
+        fetch(buildUrl('/join-subject'),
             {method: 'post', body: JSON.stringify({subjectCode}), headers: {'content-type': "application/json"}, credentials: "include"}
         ).then((res) => {
             dispatch(setSubjectList(subjectList.concat(subjectCode)))

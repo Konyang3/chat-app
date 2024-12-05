@@ -2,13 +2,14 @@ import React, { useEffect } from "react"
 import { useAppDispatch } from "../../reducer/hook"
 import { Outlet, useNavigate } from "react-router-dom"
 import { setId, setSubjectList } from "../../reducer/appSlice"
+import { buildUrl } from "../../util/util"
 
 export default function AuthGard() {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetch('http://localhost:8080/user', {
+        fetch(buildUrl('/user'), {
             method: 'get',
             headers: {'content-type': "application/json"},
             credentials: "include"

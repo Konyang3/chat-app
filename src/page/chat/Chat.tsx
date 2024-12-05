@@ -12,6 +12,7 @@ import Button from "../../component/button/Button"
 import { useAppSelector } from "../../reducer/hook"
 import { selectId, selectIsStudent } from "../../reducer/appSlice"
 import { badWords } from "./badWord"
+import { buildUrl } from "../../util/util"
 
 function Chat() {
     const { subjectName, subjectCode, date } = useParams()
@@ -27,7 +28,7 @@ function Chat() {
         (async function() {
             if (date === undefined) return
 
-            fetch('http://localhost:8080/chat-message-list', {
+            fetch(buildUrl('/chat-message-list'), {
                 method: 'post',
                 body: JSON.stringify({date, subjectCode}),
                 headers: {'content-type': "application/json"},
@@ -47,7 +48,7 @@ function Chat() {
                 alert('채팅 내역을 불러오지 못했습니다.')
             })
 
-            fetch('http://localhost:8080/chat-date-list', {
+            fetch(buildUrl('/chat-date-list'), {
                 method: 'post',
                 body: JSON.stringify({startDate: date, endDate: date, subjectCode}),
                 headers: {'content-type': "application/json"},
@@ -183,7 +184,7 @@ function Chat() {
     }
 
     const closeChat = () => {
-        fetch('http://localhost:8080/close-chat', {
+        fetch(buildUrl('/close-chat'), {
             method: 'post',
             body: JSON.stringify({subjectCode, date}),
             headers: {'content-type': "application/json"},

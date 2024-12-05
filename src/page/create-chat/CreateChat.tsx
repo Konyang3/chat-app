@@ -4,6 +4,7 @@ import Input from '../../component/input/Input'
 import Button from '../../component/button/Button'
 
 import "./CreateChat.css"
+import { buildUrl } from '../../util/util'
 
 function CreateChat() {
     const navigate = useNavigate()
@@ -51,7 +52,7 @@ function CreateChat() {
         }
 
         fetch(
-            'http://localhost:8080/create-subject', 
+            buildUrl('/create-subject'), 
             { method: "post", body: JSON.stringify(data), headers: {'content-type': "application/json"}, credentials: "include" }
         ).then((res) => {
             res.json().then((value) => {

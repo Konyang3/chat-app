@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../reducer/hook";
 import { selectIsStudent } from "../../reducer/appSlice";
+import { buildUrl } from "../../util/util";
 
 export default function CalendarView() {
     const {subjectName, subjectCode} = useParams()
@@ -19,7 +20,7 @@ export default function CalendarView() {
             const startDate = new Date(today.getFullYear(), today.getMonth(), 1);
             const endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
-            fetch("http://localhost:8080/chat-date-list", {
+            fetch(buildUrl('/chat-date-list'), {
                 method: 'post',
                 body: JSON.stringify({startDate, endDate, subjectCode}), 
                 headers: {'content-type': "application/json"},
@@ -45,7 +46,7 @@ export default function CalendarView() {
     const createChat = () => {
         const date = new Date()
 
-        fetch('http://localhost:8080/create-chat', 
+        fetch(buildUrl('/create-chat'), 
             {method: 'post', body: JSON.stringify({subjectCode, date}), headers: {'content-type': "application/json"}, credentials: "include"}
         ).then((res) => {
             if (res.status === 200) {
