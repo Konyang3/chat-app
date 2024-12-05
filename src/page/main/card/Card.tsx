@@ -1,7 +1,7 @@
 import React from "react"
 
 import "./Card.css"
-import { Button } from "antd"
+import { Button, Card as AntdCard } from "antd"
 
 type Props = {
     onEnter: (subjectName: string, subjectCode: string) => void
@@ -9,12 +9,10 @@ type Props = {
 
 function Card(props: Props) {
     return (
-        <div className="Card">
-            <h1>{props.subjectName}</h1>
+        <AntdCard className="Card" title={props.subjectName} extra={<Button onClick={() => props.onEnter(props.subjectName, props.subjectCode)}>입장</Button>}>
             <p>교수명: {props.professorName}</p>
             <p>분반: {props.nameOfClass}</p>
-            <Button size="large" onClick={() => props.onEnter(props.subjectName, props.subjectCode)}>입장</Button>
-        </div>
+        </AntdCard>
     )
 }
 

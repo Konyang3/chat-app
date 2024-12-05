@@ -5,7 +5,8 @@ import './Main.css'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../reducer/hook'
 import { selectIsStudent, selectSubjectList, setId, setSubjectList } from '../../reducer/appSlice'
-import { Button } from 'antd'
+import { Button, Card as AntdCard } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 import { buildUrl } from '../../util/util'
 
 function Main() {
@@ -84,6 +85,12 @@ function CreateChatRoom() {
         isStudent ? navigate('/join-chat') : navigate("/create-chat")
     }
 
-    return <div className='Card CreateChatRoom' onClick={goToCreateChatRoom}>+</div>
+    return (
+        <AntdCard className='CreateChatRoom' onClick={goToCreateChatRoom}>
+            <div className='content'>
+                <PlusOutlined />
+            </div>
+        </AntdCard>
+    )
 }
 
