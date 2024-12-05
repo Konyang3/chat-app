@@ -126,6 +126,8 @@ function Chat() {
             }
 
             socket.emit('room', output);
+
+            socket.removeListener('room')
         }
     }, [id])
 
@@ -227,17 +229,17 @@ function Chat() {
                     })}
                 </div>
                 {isClose ? null : 
-                    <div className="input-area">
+                    <form className="input-area" onSubmit={(e) => {
+                            e.preventDefault()
+                            send()
+                        }}>
                         <Input
                             placeholder="채팅 입력창" 
-                            value={sendMessage} 
-                            onKeyDown={(e) => {
-                                if (!e.shiftKey && e.key === 'Enter') send()
-                            }} 
+                            value={sendMessage}
                             onChange={(e) => setSendMessage(e.target.value)} 
                         />
-                        <Button size="large" shape="circle" icon={<ArrowUpOutlined />} onClick={send} type="primary"></Button>
-                    </div>
+                        <Button size="large" shape="circle" icon={<ArrowUpOutlined />} htmlType="submit" type="primary"></Button>
+                    </form>
                 }
             </div>
             <div className="best-chat-area">
