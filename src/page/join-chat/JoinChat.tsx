@@ -16,7 +16,7 @@ function JoinChat() {
     const joinChat = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if (subjectCode.length !== 8) {
+        if (subjectCode.length !== 6) {
             alert('과목 코드는 8자입니다.')
             return
         }

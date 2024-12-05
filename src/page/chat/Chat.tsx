@@ -54,7 +54,6 @@ function Chat() {
                 credentials: "include"
             }).then((res) => {
                 res.json().then((value) => {
-                    console.log(Boolean(value[0]?.close))
                     setIsClose(Boolean(value[0]?.close))
                 })
             }).catch(() => {})
