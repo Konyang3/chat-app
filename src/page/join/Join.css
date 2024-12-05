@@ -14,14 +14,10 @@
 .Join form {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 12px;
 }
 
 .Join form input {
     width: 240px;
-}
-
-.Join form .join-btn {
-    margin-left: 92px;
 }

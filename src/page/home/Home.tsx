@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import logo from '../../asset/Logo.png';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
-import Button from '../../component/button/Button';
 import { useAppDispatch, useAppSelector } from '../../reducer/hook';
 import { selectId, setId, setSubjectList } from '../../reducer/appSlice';
 import { buildUrl } from '../../util/util';
+import { Button } from 'antd';
 
 function Home() {
   const navigate = useNavigate()

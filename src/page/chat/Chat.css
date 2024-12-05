@@ -39,19 +39,7 @@
 }
 
 .Chat .chat-area .input-area input {
-   width: calc(100% - 92px);
-}
-
-.Chat .chat-area .send-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background-color: skyblue;
-    border: none;
-}
-
-.Chat .chat-area .send-btn img {
-    width: 22px;
+   width: calc(100% - 54px);
 }
 
 .Chat .best-chat-area {

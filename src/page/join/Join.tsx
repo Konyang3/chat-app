@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import Button from '../../component/button/Button'
-import Input from '../../component/input/Input'
 
 import './Join.css'
 import { useNavigate } from 'react-router-dom'
 import { aesEncrypt, buildUrl, isNumeric } from '../../util/util'
+import { Button, Input } from 'antd'
 
 function Join() {
     const [id, setId] = useState('')
@@ -84,11 +83,11 @@ function Join() {
         <div className="Join">
             <header>JOIN</header>
             <form onSubmit={signUp}>
-                <Input placeholder="학번 입력" value={id} onChange={(e) => setId(e.target.value)}></Input>
-                <Input placeholder="PW 입력" type={"password"} value={password} onChange={(e) => setPassword(e.target.value)}></Input>
-                <Input placeholder="PW 확인" type={"password"} value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)}></Input>
-                <Input placeholder="이름" value={name} onChange={(e) => setName(e.target.value)}></Input>
-                <Button className='join-btn'>회원가입</Button>
+                <Input size='large' placeholder="학번 입력" value={id} onChange={(e) => setId(e.target.value)}></Input>
+                <Input size='large' placeholder="PW 입력" type={"password"} value={password} onChange={(e) => setPassword(e.target.value)}></Input>
+                <Input size='large' placeholder="PW 확인" type={"password"} value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)}></Input>
+                <Input size='large' placeholder="이름" value={name} onChange={(e) => setName(e.target.value)}></Input>
+                <Button htmlType='submit'>회원가입</Button>
             </form>
         </div>
     )

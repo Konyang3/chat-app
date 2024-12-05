@@ -1,12 +1,11 @@
 import React, { useState } from "react"
 
 import './Login.css'
-import Button from "../../component/button/Button"
-import Input from "../../component/input/Input"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch } from "../../reducer/hook"
 import { setSubjectList, setId as setStoreId } from "../../reducer/appSlice"
 import { aesEncrypt, buildUrl, isNumeric } from "../../util/util"
+import { Button, Input } from "antd"
 
 function Login() {
     const [id, setId] = useState('')
@@ -75,9 +74,9 @@ function Login() {
         <div className="Login">
             <header>LOGIN</header>
             <form onSubmit={login}>
-                <Input placeholder="학번 입력" value={id} onChange={(e) => setId(e.target.value)}></Input>
-                <Input placeholder="PW 입력" type="password" value={password} onChange={(e) => setPassword(e.target.value)}></Input>
-                <Button>로그인</Button>
+                <Input size="large" placeholder="학번 입력" value={id} onChange={(e) => setId(e.target.value)}></Input>
+                <Input size="large" placeholder="PW 입력" type="password" value={password} onChange={(e) => setPassword(e.target.value)}></Input>
+                <Button htmlType="submit">로그인</Button>
             </form>
         </div>
     )

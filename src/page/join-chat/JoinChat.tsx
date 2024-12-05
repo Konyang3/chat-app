@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Input from '../../component/input/Input'
-import Button from '../../component/button/Button'
 
 import "./JoinChat.css"
 import { useAppDispatch, useAppSelector } from '../../reducer/hook'
 import { selectSubjectList, setSubjectList } from '../../reducer/appSlice'
 import { buildUrl } from '../../util/util'
+import { Button, Input } from 'antd'
 
 function JoinChat() {
     const navigate = useNavigate()
@@ -36,8 +35,8 @@ function JoinChat() {
         <div className="JoinChat">
             <header>채팅방 가입</header>
             <form onSubmit={joinChat}>
-                <Input placeholder="채팅방 코드 입력" value={subjectCode} onChange={(e) => setSubjectCode(e.target.value)}></Input>
-                <Button>채팅방 가입</Button>
+                <Input size='large' placeholder="채팅방 코드 입력" value={subjectCode} onChange={(e) => setSubjectCode(e.target.value)}></Input>
+                <Button htmlType='submit'>채팅방 가입</Button>
             </form>
         </div>
     )

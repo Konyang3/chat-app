@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Input from '../../component/input/Input'
-import Button from '../../component/button/Button'
 
 import "./CreateChat.css"
 import { buildUrl } from '../../util/util'
+import { Button, Input } from 'antd'
 
 function CreateChat() {
     const navigate = useNavigate()
@@ -71,10 +70,10 @@ function CreateChat() {
         <div className="CreateChat">
             <header>채팅방 생성</header>
             <form onSubmit={createChat}>
-                <Input placeholder="교수 이름 입력" value={professorName} onChange={(e) => setProfessorName(e.target.value)}></Input>
-                <Input placeholder="과목 이름 입력" value={subjectName} onChange={(e) => setSubjectName(e.target.value)}></Input>
-                <Input placeholder="분반 입력" value={className} onChange={(e) => setClassName(e.target.value)}></Input>
-                <Button>채팅방 생성</Button>
+                <Input size='large' placeholder="교수 이름 입력" value={professorName} onChange={(e) => setProfessorName(e.target.value)}></Input>
+                <Input size='large' placeholder="과목 이름 입력" value={subjectName} onChange={(e) => setSubjectName(e.target.value)}></Input>
+                <Input size='large' placeholder="분반 입력" value={className} onChange={(e) => setClassName(e.target.value)}></Input>
+                <Button htmlType='submit'>채팅방 생성</Button>
             </form>
         </div>
     )

@@ -3,16 +3,16 @@ import React, { useEffect, useState } from "react"
 import './Chat.css'
 import { useNavigate, useParams } from "react-router-dom"
 import {format} from 'date-fns'
-import Input from "../../component/input/Input"
 import ChatBubble from "./chat-bubble/ChatBubble"
 import { connect, Socket } from "socket.io-client"
 
 import UpArrowIcon from "../../asset/up-arrow-icon.svg"
-import Button from "../../component/button/Button"
 import { useAppSelector } from "../../reducer/hook"
 import { selectId, selectIsStudent } from "../../reducer/appSlice"
 import { badWords } from "./badWord"
 import { buildUrl } from "../../util/util"
+import { Button, Input } from "antd"
+import { ArrowUpOutlined } from "@ant-design/icons"
 
 function Chat() {
     const { subjectName, subjectCode, date } = useParams()
@@ -228,7 +228,7 @@ function Chat() {
                 </div>
                 {isClose ? null : 
                     <div className="input-area">
-                        <Input 
+                        <Input
                             placeholder="채팅 입력창" 
                             value={sendMessage} 
                             onKeyDown={(e) => {
@@ -236,7 +236,7 @@ function Chat() {
                             }} 
                             onChange={(e) => setSendMessage(e.target.value)} 
                         />
-                        <button className="send-btn" onClick={send}><img src={UpArrowIcon}></img></button>
+                        <Button size="large" shape="circle" icon={<ArrowUpOutlined />} onClick={send} type="primary"></Button>
                     </div>
                 }
             </div>
