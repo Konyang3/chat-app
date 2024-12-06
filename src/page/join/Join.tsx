@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import './Join.css'
 import { useNavigate } from 'react-router-dom'
 import { aesEncrypt, buildUrl, isNumeric } from '../../util/util'
-import { Button, Input } from 'antd'
+import { Button, Input, Radio } from 'antd'
 
 function Join() {
     const [id, setId] = useState('')
@@ -87,6 +87,17 @@ function Join() {
                 <Input size='large' placeholder="PW 입력" type={"password"} value={password} onChange={(e) => setPassword(e.target.value)}></Input>
                 <Input size='large' placeholder="PW 확인" type={"password"} value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)}></Input>
                 <Input size='large' placeholder="이름" value={name} onChange={(e) => setName(e.target.value)}></Input>
+                <Radio.Group
+                    style={{width: "100%"}}
+                    block
+                    options={[
+                        { label: '교수', value: '교수' },
+                        { label: '학생', value: '학생' },
+                      ]}
+                    defaultValue="Apple"
+                    optionType="button"
+                    buttonStyle="solid"
+                />
                 <Button htmlType='submit'>회원가입</Button>
             </form>
         </div>
