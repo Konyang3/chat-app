@@ -16,16 +16,20 @@ function JoinChat() {
     const joinChat = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if (subjectCode.length !== 6) {
-            alert('과목 코드는 8자입니다.')
+        if (subjectCode.length === 0) {
+            alert('과목 코드를 입력해주세요.')
             return
         }
         
         fetch(buildUrl('/join-subject'),
             {method: 'post', body: JSON.stringify({subjectCode}), headers: {'content-type': "application/json"}, credentials: "include"}
         ).then((res) => {
-            dispatch(setSubjectList(subjectList.concat(subjectCode)))
-            navigate('/main')
+            if (res.status === 200) {
+                dispatch(setSubjectList(subjectList.concat(subjectCode)))
+                navigate('/main')
+            } else {
+                alert('채팅방 가입에 실패하였습니다.')
+            }
         }).catch((e) => {
             alert('채팅방 가입에 실패하였습니다.')
         })
