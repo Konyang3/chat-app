@@ -65,7 +65,7 @@ function Chat() {
         if (date === undefined) return
         if (id === null) return
 
-        const socket = connect('http://localhost:8080', {'forceNew':true})
+        const socket = connect(process.env.REACT_APP_HOST, {'forceNew':true})
         setSocket(socket)
 
         socket.on('connect', function() {
@@ -164,6 +164,29 @@ function Chat() {
     useEffect(() => {
         messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
       }, [chatMessageList]);
+
+    useEffect(() => {
+        if (socket === undefined) return
+        if (isClose) return
+
+        const handleMouseLeave = () => {
+            console.log("mouseout")
+            const roomId = subjectCode + "_" + date
+            socket.emit('mouseout', {sender: id, recepient: roomId})
+        }
+
+        if (!isStudent) {
+            socket.on('mouseout', function(data) {
+                alert(data.sender + '가 화면을 이탈하였습니다.')
+            })
+        } else {
+            document.addEventListener('mouseleave', handleMouseLeave)
+        }
+
+        return () => {
+            document.removeEventListener('mouseleave', handleMouseLeave)
+        }
+    }, [socket, isClose])
 
     const send = () => {
         if (date === undefined) return
