@@ -24,6 +24,8 @@ function Home() {
                 dispatch(setSubjectList(value.subjectCodes))
             })
         }
+    }).catch((e) => {
+      console.log(e)
     })
   }, [])
 
